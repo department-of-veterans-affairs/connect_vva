@@ -7,7 +7,7 @@ Example Usage
 ```ruby
 require 'vva'
 
-v = VVA::::DocumentListWebService.new(
+v = VVA::DocumentListWebService.new(
   wsdl: 'http://service.example.com?wsdl',
   username: "xxx",
   password: "xxxxxx"
