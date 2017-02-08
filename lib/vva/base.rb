@@ -4,14 +4,14 @@ require "nokogiri"
 
 module VVA
   class Base
-    def initialize(wsdl:, username:, password:, log: false,
+    def initialize(wsdl: nil, username: "", password: "", log: false,
                    ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil)
-      @wsdl = wsdl
+      @wsdl = wsdl || ENV["WSDL"]
       @username = username
       @password = password
-      @ssl_cert_file = ssl_cert_file
-      @ssl_cert_key_file = ssl_cert_key_file
-      @ssl_ca_cert = ssl_ca_cert
+      @ssl_cert_file = ssl_cert_file || ENV["SSL_CERT_FILE"]
+      @ssl_cert_key_file = ssl_cert_key_file || ENV["SSL_CERT_KEY_FILE"]
+      @ssl_ca_cert = ssl_ca_cert || ENV["SSL_CA_CERT"]
       @log = log
     end
 
@@ -40,7 +40,8 @@ module VVA
         wsdl: @wsdl, soap_header: header, namespaces: namespaces, log: @log,
         ssl_cert_key_file: @ssl_cert_key_file,
         ssl_cert_file: @ssl_cert_file,
-        ssl_ca_cert_file: @ssl_ca_cert
+        ssl_ca_cert_file: @ssl_ca_cert,
+        ssl_ciphers: "AES128-SHA"
       )
     end
 

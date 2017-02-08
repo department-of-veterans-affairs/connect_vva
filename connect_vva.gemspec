@@ -14,6 +14,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "bundler"
   gem.add_development_dependency "rake"
   gem.add_development_dependency "rubocop"
+  gem.add_development_dependency 'pry'
+  gem.add_development_dependency 'dotenv'
 
   gem.files         = Dir["lib/**/*.rb"]
   gem.require_paths = ["lib"]

@@ -2,7 +2,7 @@ vva_connect
 ===
 
 Example Usage
--------------
+------------- 
 
 ```ruby
 require 'vva'
@@ -14,6 +14,10 @@ v = VVA::DocumentListWebService.new(
 )
 puts v.get_by_claim_number("777")
 ```
+
+## Development
+
+After checking out the repo, run `bundle install` to install dependencies. You can also run `bundle console` for an interactive prompt that will allow you to experiment. If you want to use `pry`, run `bundle config console pry` and then `bundle console`.
 
 License
 =======
