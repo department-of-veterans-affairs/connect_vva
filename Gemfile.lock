@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/faucct/httpi.git
-  revision: 749badaa199e3d07f311390d9fbcd4621e74edee
+  revision: af7dbff663e7cec119fb248c12162bca2f893db1
   branch: feature/open_ssl_ciphers
   specs:
     httpi (2.4.2)
@@ -26,7 +26,6 @@ PATH
   specs:
     connect_vva (0.1)
       nokogiri
-      savon
 
 GEM
   remote: https://rubygems.org/

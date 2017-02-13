@@ -41,7 +41,9 @@ module VVA
         ssl_cert_key_file: @ssl_cert_key_file,
         ssl_cert_file: @ssl_cert_file,
         ssl_ca_cert_file: @ssl_ca_cert,
-        ssl_ciphers: "AES128-SHA"
+        ssl_ciphers: "AES128-SHA",
+        log: @log,
+        pretty_print_xml: true
       )
     end
 
