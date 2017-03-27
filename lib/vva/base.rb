@@ -18,31 +18,39 @@ module VVA
     private
 
     def header
-      {
-        "wsse:Security": {
-          "wsse:UsernameToken": {
-            "wsse:Username": @username,
-            "wsse:Password": @password
-          }
-        }
-      }
+      # Stock XML structure {{{
+      header = Nokogiri::XML::DocumentFragment.parse <<-EOXML
+  <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+    <wsse:UsernameToken>
+      <wsse:Username></wsse:Username>
+      <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"></wsse:Password>
+    </wsse:UsernameToken>
+  </wsse:Security>
+  EOXML
+      # }}}
+
+      { Username: @username, Password: @password }.each do |k, v|
+        header.xpath(".//*[local-name()='#{k}']")[0].content = v
+      end
+      header
     end
 
     def namespaces
       {
-        "xmlns:wsse" => "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd",
         "xmlns:wsu" => "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility- 1.0.xsd"
       }
     end
 
     def client
       @client ||= Savon.client(
-        wsdl: @wsdl, soap_header: header, namespaces: namespaces, log: @log,
+        wsdl: @wsdl,
+        soap_header: header,
+        namespaces: namespaces,
+        log: @log,
         ssl_cert_key_file: @ssl_cert_key_file,
         ssl_cert_file: @ssl_cert_file,
         ssl_ca_cert_file: @ssl_ca_cert,
         ssl_ciphers: "AES128-SHA",
-        log: @log,
         pretty_print_xml: true
       )
     end
