@@ -2,18 +2,20 @@ vva_connect
 ===
 
 Example Usage
-------------- 
+-------------
 
 ```ruby
 require 'vva'
 
-v = VVA::DocumentListWebService.new(
+v = VVA::Services.new.new(
   wsdl: "http://service.example.com?wsdl",
+  username: "USER111",
+  password: "SECRET",
   ssl_cert_file: "/path/to/cert",
   ssl_cert_key_file: "/path/to/private/key",
   ssl_ca_cert: "/path/to/ca/file"
 )
-puts v.get_by_claim_number("777")
+v.document_list.get_by_claim_number("777")
 ```
 
 ## Development
