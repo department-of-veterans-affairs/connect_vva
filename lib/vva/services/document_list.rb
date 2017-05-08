@@ -1,4 +1,3 @@
-require "pry"
 module VVA
 
   class DocumentListWebService < VVA::Base
