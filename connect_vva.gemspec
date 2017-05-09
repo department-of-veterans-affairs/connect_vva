@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.email         = "Anna.Roltsch@va.gov"
   gem.homepage      = ""
 
-  gem.add_runtime_dependency "savon", '~> 2.11', '>= 2.11.0'
+  gem.add_runtime_dependency "savon", "~> 2.11", ">= 2.11.0"
 
   gem.files         = Dir["lib/**/*.rb"]
   gem.require_paths = ["lib"]
