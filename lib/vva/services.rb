@@ -1,4 +1,5 @@
 require "vva/services/document_list"
+require "vva/services/document_content"
 
 # Class to hide the actual creation of service objects, since having
 # to construct them all really sucks.
