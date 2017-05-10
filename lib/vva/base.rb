@@ -57,6 +57,8 @@ module VVA
     # Proxy to call a method on our web service.
     def request(method, message)
       client.call(method, message: message)
+    rescue Savon::SOAPFault => e
+      raise e
     end
   end
 end

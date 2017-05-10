@@ -15,7 +15,18 @@ v = VVA::Services.new.new(
   ssl_cert_key_file: "/path/to/private/key",
   ssl_ca_cert: "/path/to/ca/file"
 )
+
+# get document list by claim number
 v.document_list.get_by_claim_number("777")
+
+# get document content by document id
+v.document_content.get_by_document_id(
+  document_id: "{DAFE0879-C588-4084-A532-482138F30651}",
+  source: "P8",
+  format: "pdf",
+  jro: "459",
+  ssn: "111111111"
+)
 ```
 
 ## Development
