@@ -1,0 +1,8 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetDocumentListResponse xmlns="http://service.bfi.va.gov/">
+      <message>No records found</message>
+      <size>0</size>
+    </GetDocumentListResponse>
+  </soap:Body>
+</soap:Envelope>

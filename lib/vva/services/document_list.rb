@@ -8,7 +8,13 @@ module VVA
 
     def get_by_claim_number(claim_number)
       response = request(:get_document_list, "claimNbr": claim_number)
-      response.body[:get_document_list_response][:dcmnt_record].map do |record|
+      document_list = response.body[:get_document_list_response][:dcmnt_record]
+
+      unless document_list
+        fail VVA::HTTPError.new(code: response.http.code, body: response.http.body, data: { claim_number: claim_number })
+      end
+
+      document_list.map do |record|
         OpenStruct.new(
           document_id: record[:fn_dcmnt_id],
           restricted: record[:rstrcd_dcmnt_ind] == "Y" ? true : false,
