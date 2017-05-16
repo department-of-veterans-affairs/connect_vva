@@ -3,6 +3,20 @@ require "savon"
 require "nokogiri"
 
 module VVA
+
+  class HTTPError < StandardError
+    attr_reader :code, :body, :data
+
+    def initialize(code:, body:, data:)
+      super("status_code=#{code}, body=#{body}, data=#{data}")
+      @code = code
+      @body = body
+      @data = data
+    end
+  end
+
+
+
   class Base
     def initialize(wsdl: nil, username: nil, password: nil, log: false,
                    ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil)
