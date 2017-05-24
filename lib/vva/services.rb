@@ -6,7 +6,7 @@ require "vva/services/document_content"
 module VVA
   class Services
     def initialize(wsdl:, username:, password:, log: false,
-                   ssl_cert_file:, ssl_cert_key_file:, ssl_ca_cert:)
+                   ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil)
 
       @config = { wsdl: wsdl, username: username, password: password,
                   ssl_cert_file: ssl_cert_file,

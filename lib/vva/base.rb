@@ -4,7 +4,10 @@ require "nokogiri"
 
 module VVA
 
-  class HTTPError < StandardError
+  class ClientError < StandardError
+  end
+
+  class HTTPError < ClientError
     attr_reader :code, :body, :data
 
     def initialize(code:, body:, data:)
@@ -15,7 +18,11 @@ module VVA
     end
   end
 
-
+  class SOAPError < ClientError
+    def initialize(msg)
+      super(msg)
+    end
+  end
 
   class Base
     def initialize(wsdl: nil, username: nil, password: nil, log: false,
@@ -64,6 +71,7 @@ module VVA
         ssl_cert_key_file: @ssl_cert_key_file,
         ssl_cert_file: @ssl_cert_file,
         ssl_ca_cert_file: @ssl_ca_cert,
+        ssl_verify_mode: :none,
         pretty_print_xml: true
       )
     end
@@ -72,7 +80,7 @@ module VVA
     def request(method, message)
       client.call(method, message: message)
     rescue Savon::SOAPFault => e
-      raise e
+      raise VVA::SOAPError.new(e)
     end
   end
 end

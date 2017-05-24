@@ -29,7 +29,7 @@ describe VVA::DocumentListWebService do
       # set up an expectation
       savon.expects(:get_document_list).with(message: { claimNbr: "456456456" }).returns(fixture)
 
-      expect{ subject }.to raise_error(VVA::HTTPError, /No.+records/)
+      expect(subject).to eq []
     end
   end
 end
