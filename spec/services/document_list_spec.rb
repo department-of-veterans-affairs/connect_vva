@@ -18,6 +18,7 @@ describe VVA::DocumentListWebService do
       doc1 = subject[0]
       expect(doc1.restricted).to eq true
       expect(doc1.document_id).to eq "{780A881E-65E4-4470-8C9D-72F704469682}"
+      expect(doc1.downloaded_from).to eq "VVA"
 
       doc2 = subject[1]
       expect(doc2.restricted).to eq false

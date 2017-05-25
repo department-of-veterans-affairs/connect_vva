@@ -30,7 +30,7 @@ module VVA
           source: record[:fn_dcmnt_source],
           jro: record[:jrsdtn_ro_nbr],
           ssn: record[:ssn_nbr],
-          vva: true
+          downloaded_from: "VVA"
         )
       end
     end
