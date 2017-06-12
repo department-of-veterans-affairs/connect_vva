@@ -72,6 +72,7 @@ module VVA
         ssl_cert_file: @ssl_cert_file,
         ssl_ca_cert_file: @ssl_ca_cert,
         ssl_verify_mode: :none,
+        ssl_ciphers: "AES128-SHA",
         pretty_print_xml: true
       )
     end
