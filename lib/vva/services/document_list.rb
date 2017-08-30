@@ -18,7 +18,7 @@ module VVA
 
       return [] if document_list.blank?
       # Savon parses one item list as a Hash instead of an Array
-      document_list.is_a?(Hash) ? [create_record(document_list)] : document_list.map { |r| create_record(r) }
+      [document_list].flatten.map { |r| create_record(r) }
     end
 
     private
