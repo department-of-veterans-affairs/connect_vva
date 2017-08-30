@@ -1,0 +1,37 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetDocumentListResponse xmlns="http://service.bfi.va.gov/">
+    <dcmntRecord>
+      <dcmntRecordId>44674354459</dcmntRecordId>
+      <authorNm>459_V459VSR1</authorNm>
+      <authorRoNbr>459</authorRoNbr>
+      <batchNm>33407459111354A</batchNm>
+      <categyListTxt>18</categyListTxt>
+      <dcmntFormatCd>PDF</dcmntFormatCd>
+      <dcmntSizeNbr>1</dcmntSizeNbr>
+      <dcmntTypeLupId>457</dcmntTypeLupId>
+      <efoldrId>31978459</efoldrId>
+      <lastUserModifdNm>V459SUP1</lastUserModifdNm>
+      <rcvdDt>10/19/2016</rcvdDt>
+      <readInd>N</readInd>
+      <roLupId>1</roLupId>
+      <rstrcdDcmntInd>Y</rstrcdDcmntInd>
+      <rstrcdReasonLupId>10</rstrcdReasonLupId>
+      <sourceComntTxt>a</sourceComntTxt>
+      <sourceTxt>USER</sourceTxt>
+      <storgDt>10/20/2016</storgDt>
+      <subjctTxt>a</subjctTxt>
+      <trtmntCndtnTxt>a</trtmntCndtnTxt>
+      <dcmntTypeDescpTxt>Unknown PGF</dcmntTypeDescpTxt>
+      <fnDcmntId>{780A881E-65E4-4470-8C9D-72F704469682}</fnDcmntId>
+      <fnDcmntSource>P8</fnDcmntSource>
+      <claimNbr>456456456</claimNbr>
+      <ssnNbr>456456456</ssnNbr>
+      <vetFirstName>DEE</vetFirstName>
+      <vetLastName>TORPEDO</vetLastName>
+      <vetBirthDt>02/01/1965</vetBirthDt>
+      <jrsdtnRoNbr>459</jrsdtnRoNbr>
+    </dcmntRecord>
+    </GetDocumentListResponse>
+  </soap:Body>
+</soap:Envelope>

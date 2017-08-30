@@ -34,5 +34,15 @@ describe VVA::DocumentListWebService do
 
       expect(subject).to eq []
     end
+
+    it "handles one record without error" do
+      fixture = File.read("spec/fixtures/one_record_response.xml")
+      # set up an expectation
+      savon.expects(:get_document_list).with(message: { claimNbr: "456456456" }).returns(fixture)
+
+      expect(subject).to be_an(Array)
+      expect(subject.size).to eq 1
+      expect(subject[0].document_id).to eq "{780A881E-65E4-4470-8C9D-72F704469682}"
+    end
   end
 end
