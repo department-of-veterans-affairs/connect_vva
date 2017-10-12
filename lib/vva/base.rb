@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require "savon"
 require "nokogiri"
+require "httpi/net_http/cipher"
 
 module VVA
 
@@ -35,6 +36,8 @@ module VVA
       @ssl_ca_cert = ssl_ca_cert
       @log = log
     end
+
+    HTTPI::Adapter::NetHTTP.prepend HTTPI::NetHTTP::Cipher
 
     private
 
@@ -72,7 +75,8 @@ module VVA
         ssl_cert_file: @ssl_cert_file,
         ssl_ca_cert_file: @ssl_ca_cert,
         ssl_verify_mode: :none,
-        pretty_print_xml: true
+        pretty_print_xml: true,
+        adapter: :net_http
       )
     end
 

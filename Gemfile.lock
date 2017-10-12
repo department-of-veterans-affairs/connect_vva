@@ -24,9 +24,9 @@ GEM
       rack
       socksify
     method_source (0.8.2)
-    mini_portile2 (2.1.0)
-    nokogiri (1.7.1)
-      mini_portile2 (~> 2.1.0)
+    mini_portile2 (2.3.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     nori (2.6.0)
     parser (2.4.0.0)
       ast (~> 2.2)
@@ -35,7 +35,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (2.0.1)
+    rack (2.0.3)
     rainbow (2.2.1)
     rake (12.0.0)
     rspec (3.6.0)
