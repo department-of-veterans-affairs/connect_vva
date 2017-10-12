@@ -1,6 +1,5 @@
 module HTTPI
   module NetHTTP
-
     module Cipher
 
       private
