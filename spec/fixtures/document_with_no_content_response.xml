@@ -1,0 +1,1 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetDocumentContentResponse xmlns="http://service.bfi.va.gov/"><content></content><mimeType>application/octet-stream</mimeType></GetDocumentContentResponse></soap:Body></soap:Envelope>
