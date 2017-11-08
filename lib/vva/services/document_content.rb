@@ -18,7 +18,7 @@ module VVA
       )
       content = response.body[:get_document_content_response][:content]
       mime_type = response.body[:get_document_content_response][:mime_type]
-      OpenStruct.new(content: Base64.decode64(content), mime_type: mime_type)
+      OpenStruct.new(content: Base64.decode64(content || ""), mime_type: mime_type)
     end
   end
 end
