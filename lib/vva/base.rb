@@ -16,7 +16,6 @@ module VVA
       @code = code
       @body = body
       @data = data
-
     end
   end
 
@@ -63,9 +62,15 @@ module VVA
     end
 
     def domain
-      @wsdl.match(/\/([a-zA-z0-9\.:]+?)\//)[1]
+      @wsdl.match(/\/([a-zA-z0-9\.\-]+?)\//)[1]
     end
 
+    def wsdl
+      if @forward_proxy_url
+        return @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/")
+      end
+      @wsdl
+    end
 
     def namespaces
       {
@@ -75,7 +80,7 @@ module VVA
 
     def client
       @client ||= Savon.client(
-        wsdl: @wsdl,
+        wsdl: wsdl,
         soap_header: header,
         namespaces: namespaces,
         log: @log,
