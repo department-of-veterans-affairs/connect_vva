@@ -63,7 +63,7 @@ module VVA
     end
 
     def domain
-      @wsdl.match(\/([a-zA-z0-9\.:]+?)\/)[1]
+      @wsdl.match(/\/([a-zA-z0-9\.:]+?)\//)[1]
     end
 
 
