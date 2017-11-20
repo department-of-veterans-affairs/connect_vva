@@ -29,7 +29,7 @@ module VVA
   class Base
     def initialize(wsdl: nil, username: nil, password: nil,
                    ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil,
-                   forward_proxy_url: nil, log: false,)
+                   forward_proxy_url: nil, log: false)
       @wsdl = wsdl
       @username = username
       @password = password
