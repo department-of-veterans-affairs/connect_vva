@@ -26,14 +26,16 @@ module VVA
   end
 
   class Base
-    def initialize(wsdl: nil, username: nil, password: nil, log: false,
-                   ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil)
+    def initialize(wsdl: nil, username: nil, password: nil,
+                   ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil,
+                   forward_proxy_url: nil, log: false)
       @wsdl = wsdl
       @username = username
       @password = password
       @ssl_cert_file = ssl_cert_file
       @ssl_cert_key_file = ssl_cert_key_file
       @ssl_ca_cert = ssl_ca_cert
+      @forward_proxy_url = forward_proxy_url
       @log = log
     end
 
@@ -59,6 +61,17 @@ module VVA
       header
     end
 
+    def domain
+      @wsdl.match(/\/([a-zA-z0-9\.\-]+?)\//)[1]
+    end
+
+    def wsdl
+      if @forward_proxy_url
+        return @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/")
+      end
+      @wsdl
+    end
+
     def namespaces
       {
         "xmlns:wsu" => "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility- 1.0.xsd"
@@ -67,7 +80,7 @@ module VVA
 
     def client
       @client ||= Savon.client(
-        wsdl: @wsdl,
+        wsdl: wsdl,
         soap_header: header,
         namespaces: namespaces,
         log: @log,
@@ -83,6 +96,7 @@ module VVA
     # Proxy to call a method on our web service.
     def request(method, message)
       tries ||= 3
+      client.wsdl.request.headers = { "Host" => domain } if @forward_proxy_url
       client.call(method, message: message)
     # We are going to retry 3 times if there is an SSL error
     rescue HTTPI::SSLError => e

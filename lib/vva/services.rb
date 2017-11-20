@@ -5,13 +5,15 @@ require "vva/services/document_content"
 # to construct them all really sucks.
 module VVA
   class Services
-    def initialize(wsdl:, username:, password:, log: false,
-                   ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil)
+    def initialize(wsdl: nil, username: nil, password: nil,
+                   ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil,
+                   forward_proxy_url: nil, log: false)
 
       @config = { wsdl: wsdl, username: username, password: password,
                   ssl_cert_file: ssl_cert_file,
                   ssl_cert_key_file: ssl_cert_key_file,
                   ssl_ca_cert: ssl_ca_cert,
+                  forward_proxy_url: forward_proxy_url,
                   log: log }
     end
 
