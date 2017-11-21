@@ -62,7 +62,7 @@ module VVA
     end
 
     def domain
-      @wsdl.match(/\/([a-zA-z0-9\.\-]+?)\//)[1]
+      @wsdl.match(/\/([a-zA-z0-9\.\-]+?):/).captures[0]
     end
 
     def wsdl
@@ -74,7 +74,7 @@ module VVA
 
     def namespaces
       {
-        "xmlns:wsu" => "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility- 1.0.xsd"
+        "xmlns:wsu" => "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
       }
     end
 
