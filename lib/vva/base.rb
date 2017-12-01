@@ -95,13 +95,8 @@ module VVA
 
     # Proxy to call a method on our web service.
     def request(method, message)
-      tries ||= 3
       client.wsdl.request.headers = { "Host" => domain } if @forward_proxy_url
       client.call(method, message: message)
-    # We are going to retry 3 times if there is an SSL error
-    rescue HTTPI::SSLError => e
-      sleep 1 and retry unless (tries -= 1).zero?
-      raise e
     rescue Savon::SOAPFault => e
       raise VVA::SOAPError.new(e)
     end
