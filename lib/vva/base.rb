@@ -81,6 +81,8 @@ module VVA
     def client
       @client ||= Savon.client(
         wsdl: wsdl,
+        open_timeout: 600,
+        read_timeout: 600,
         soap_header: header,
         namespaces: namespaces,
         log: @log,
