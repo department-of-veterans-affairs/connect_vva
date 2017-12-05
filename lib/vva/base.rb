@@ -67,7 +67,7 @@ module VVA
 
     def wsdl
       if @forward_proxy_url
-        return @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/")
+        return @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/envoy-prefix-#{method.to_s}")
       end
       @wsdl
     end
@@ -97,7 +97,6 @@ module VVA
 
     # Proxy to call a method on our web service.
     def request(method, message)
-      http_headers = { "Service" => method.to_s }
       http_headers["Host"] = domain if @forward_proxy_url
       client.wsdl.request.headers = http_headers
       client.call(method, message: message)
