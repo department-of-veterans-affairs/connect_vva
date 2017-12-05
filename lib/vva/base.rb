@@ -97,9 +97,7 @@ module VVA
 
     # Proxy to call a method on our web service.
     def request(method, message)
-      http_headers = {}
-      http_headers["Host"] = domain if @forward_proxy_url
-      client.wsdl.request.headers = http_headers
+      client.wsdl.request.headers = {"Host" => domain } if @forward_proxy_url
       client.call(method, message: message)
     rescue Savon::SOAPFault => e
       raise VVA::SOAPError.new(e)
