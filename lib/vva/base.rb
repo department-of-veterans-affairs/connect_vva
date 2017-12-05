@@ -67,7 +67,7 @@ module VVA
 
     def wsdl
       if @forward_proxy_url
-        return @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/envoy-prefix-#{method.to_s}")
+        return @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/envoy-prefix")
       end
       @wsdl
     end
