@@ -65,13 +65,6 @@ module VVA
       @wsdl.match(/\/([a-zA-z0-9\.\-]+?):/).captures[0]
     end
 
-    def wsdl
-      if @forward_proxy_url
-        return @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/envoy-prefix")
-      end
-      @wsdl
-    end
-
     def namespaces
       {
         "xmlns:wsu" => "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
@@ -80,7 +73,7 @@ module VVA
 
     def client
       @client ||= Savon.client(
-        wsdl: wsdl,
+        wsdl: @wsdl,
         open_timeout: 600,
         read_timeout: 600,
         soap_header: header,
@@ -97,7 +90,13 @@ module VVA
 
     # Proxy to call a method on our web service.
     def request(method, message)
-      client.wsdl.request.headers = {"Host" => domain } if @forward_proxy_url
+      # We're using Host and Path rewrites to route requests
+      # through Envoy forward proxy; therefore we need to
+      # change the `path` and `Host` headers
+      if @forward_proxy_url
+        client.wsdl.document = @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/envoy-prefix-#{method.to_s}/")
+        client.wsdl.request.headers = {"Host" => domain }
+      end
       client.call(method, message: message)
     rescue Savon::SOAPFault => e
       raise VVA::SOAPError.new(e)
