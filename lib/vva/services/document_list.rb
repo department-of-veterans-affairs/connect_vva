@@ -26,6 +26,8 @@ module VVA
     def create_record(record)
       OpenStruct.new(
         document_id: record[:fn_dcmnt_id],
+        series_id: record[:fn_dcmnt_id],
+        version: "1",
         restricted: record[:rstrcd_dcmnt_ind] == "Y" ? true : false,
         type_id: record[:dcmnt_type_lup_id],
         type_description: record[:dcmnt_type_descp_txt],
