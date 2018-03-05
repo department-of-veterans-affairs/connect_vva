@@ -2,9 +2,7 @@
 require "spec_helper"
 
 describe VVA::DocumentListWebService do
-
   context "#get_by_claim_number" do
-
     subject { VVA::DocumentListWebService.new.get_by_claim_number("456456456") }
 
     it "returns correct information" do
@@ -45,6 +43,18 @@ describe VVA::DocumentListWebService do
       expect(subject).to be_an(Array)
       expect(subject.size).to eq 1
       expect(subject[0].document_id).to eq "{780A881E-65E4-4470-8C9D-72F704469682}"
+    end
+  end
+
+  context "when VVA returns a 503 response" do
+    before do
+      allow_any_instance_of(Savon::Client).to receive(:call).and_raise(
+        Savon::HTTPError.new(HTTPI::Response.new(503, {}, "upstream connect error or disconnect/reset before headers"))
+      )
+    end
+
+    it "raises a VVA::HTTPError to the calling code" do
+      expect { VVA::DocumentListWebService.new.get_by_claim_number("19891213") }.to raise_error(VVA::HTTPError)
     end
   end
 end
