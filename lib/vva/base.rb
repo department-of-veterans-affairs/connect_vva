@@ -98,7 +98,7 @@ module VVA
         client.wsdl.request.headers = {"Host" => domain }
       end
       client.call(method, message: message)
-    rescue Savon::SOAPFault => e
+    rescue Savon::SOAPFault, Savon::HTTPError => e
       raise VVA::SOAPError.new(e)
     end
   end
