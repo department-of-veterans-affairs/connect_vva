@@ -9,13 +9,12 @@ module VVA
   end
 
   class HTTPError < ClientError
-    attr_reader :code, :body, :data
+    attr_reader :code, :body
 
-    def initialize(code:, body:, data:)
-      super("status_code=#{code}, body=#{body}, data=#{data}")
+    def initialize(code:, body:)
+      super("status_code=#{code}, body=#{body}")
       @code = code
       @body = body
-      @data = data
     end
   end
 
@@ -100,6 +99,8 @@ module VVA
       client.call(method, message: message)
     rescue Savon::SOAPFault => e
       raise VVA::SOAPError.new(e)
+    rescue Savon::HTTPError => e
+      raise VVA::HTTPError.new(code: e.to_hash[:code], body: e.to_hash[:body])
     end
   end
 end
