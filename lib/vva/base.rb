@@ -4,24 +4,26 @@ require "nokogiri"
 require "httpi/net_http/cipher"
 
 module VVA
-
   class ClientError < StandardError
+    def initialize(msg)
+      super(msg)
+    end
   end
 
   class HTTPError < ClientError
     attr_reader :code, :body
 
-    def initialize(code:, body:)
+    def initialize(err)
+      @code = err.to_hash[:code]
+      @body = err.to_hash[:body]
       super("status_code=#{code}, body=#{body}")
-      @code = code
-      @body = body
     end
   end
 
   class SOAPError < ClientError
-    def initialize(msg)
-      super(msg)
-    end
+  end
+
+  class SSLError < ClientError
   end
 
   class Base
@@ -61,7 +63,7 @@ module VVA
     end
 
     def domain
-      @wsdl.match(/\/([a-zA-z0-9\.\-]+?):/).captures[0]
+      @wsdl.match(%r{/([a-zA-z0-9\.\-]+?):}).captures[0]
     end
 
     def namespaces
@@ -93,14 +95,16 @@ module VVA
       # through Envoy forward proxy; therefore we need to
       # change the `path` and `Host` headers
       if @forward_proxy_url
-        client.wsdl.document = @wsdl.gsub(/https:\/\/([a-zA-z0-9\.:\-]+?)\//, @forward_proxy_url+"/envoy-prefix-#{method.to_s}/")
-        client.wsdl.request.headers = {"Host" => domain }
+        client.wsdl.document = @wsdl.gsub(%r{https://([a-zA-z0-9\.:\-]+?)/}, @forward_proxy_url + "/envoy-prefix-#{method}/")
+        client.wsdl.request.headers = { "Host" => domain }
       end
       client.call(method, message: message)
     rescue Savon::SOAPFault => e
       raise VVA::SOAPError.new(e)
     rescue Savon::HTTPError => e
-      raise VVA::HTTPError.new(code: e.to_hash[:code], body: e.to_hash[:body])
+      raise VVA::HTTPError.new(e)
+    rescue HTTPI::SSLError => e
+      raise VVA::SSLError.new(e)
     end
   end
 end
