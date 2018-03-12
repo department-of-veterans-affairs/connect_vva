@@ -47,14 +47,28 @@ describe VVA::DocumentListWebService do
   end
 
   context "when VVA returns a 503 response" do
+    let(:err_msg) { "upstream connect error or disconnect/reset before headers" }
     before do
       allow_any_instance_of(Savon::Client).to receive(:call).and_raise(
-        Savon::HTTPError.new(HTTPI::Response.new(503, {}, "upstream connect error or disconnect/reset before headers"))
+        Savon::HTTPError.new(HTTPI::Response.new(503, {}, err_msg))
       )
     end
 
     it "raises a VVA::HTTPError to the calling code" do
-      expect { VVA::DocumentListWebService.new.get_by_claim_number("19891213") }.to raise_error(VVA::HTTPError)
+      expect { VVA::DocumentListWebService.new.get_by_claim_number("19891213") }.to raise_error(VVA::HTTPError, /#{err_msg}/)
+    end
+  end
+
+  context "when VVA encounters an openssl error" do
+    let(:err_msg) { "SSL_connect SYSCALL returned=5 errno=0 state=SSLv2/v3 read server hello A" }
+    before do
+      allow_any_instance_of(Savon::Client).to receive(:call).and_raise(
+        HTTPI::SSLError.new(err_msg)
+      )
+    end
+
+    it "raises a VVA::HTTPError to the calling code" do
+      expect { VVA::DocumentListWebService.new.get_by_claim_number("19120623") }.to raise_error(VVA::SSLError, /#{err_msg}/)
     end
   end
 end
