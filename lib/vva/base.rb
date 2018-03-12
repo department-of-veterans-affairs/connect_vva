@@ -5,7 +5,7 @@ require "httpi/net_http/cipher"
 
 module VVA
   class ClientError < StandardError
-    def initialize(msg)
+    def initialize(msg = nil)
       super(msg)
     end
   end
