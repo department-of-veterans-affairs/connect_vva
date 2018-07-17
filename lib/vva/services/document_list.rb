@@ -33,6 +33,7 @@ module VVA
         type_description: record[:dcmnt_type_descp_txt],
         mime_type: MIME_TYPES[record[:dcmnt_format_cd].downcase],
         received_at: record[:rcvd_dt].nil? ? nil : Time.strptime(record[:rcvd_dt], "%m/%d/%Y").to_date,
+        upload_date: record[:storg_dt].nil? ? nil : Time.strptime(record[:storg_dt], "%m/%d/%Y").to_date,
         format: record[:dcmnt_format_cd],
         source: record[:fn_dcmnt_source],
         jro: record[:jrsdtn_ro_nbr],
