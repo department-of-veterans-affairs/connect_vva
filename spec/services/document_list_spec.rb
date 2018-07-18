@@ -20,6 +20,7 @@ describe VVA::DocumentListWebService do
       expect(doc1.version).to eq "1"
       expect(doc1.downloaded_from).to eq "VVA"
       expect(doc1.received_at).to be_a(Date)
+      expect(doc1.upload_date).to be_a(Date)
 
       doc2 = subject[1]
       expect(doc2.restricted).to eq false
