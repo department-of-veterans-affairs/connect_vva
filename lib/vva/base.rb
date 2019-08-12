@@ -4,28 +4,6 @@ require "nokogiri"
 require "httpi/net_http/cipher"
 
 module VVA
-  class ClientError < StandardError
-    def initialize(msg = nil)
-      super(msg)
-    end
-  end
-
-  class HTTPError < ClientError
-    attr_reader :code, :body
-
-    def initialize(err)
-      @code = err.to_hash[:code]
-      @body = err.to_hash[:body]
-      super("status_code=#{code}, body=#{body}")
-    end
-  end
-
-  class SOAPError < ClientError
-  end
-
-  class SSLError < ClientError
-  end
-
   class Base
     def initialize(wsdl: nil, username: nil, password: nil,
                    ssl_cert_file: nil, ssl_cert_key_file: nil, ssl_ca_cert: nil,

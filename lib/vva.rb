@@ -1,5 +1,6 @@
 require "dotenv/load"
 require "ostruct"
 require "pry"
+require "vva/errors"
 require "vva/base"
 require "vva/services"
